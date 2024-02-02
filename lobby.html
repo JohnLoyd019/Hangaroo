@@ -1,0 +1,63 @@
+<DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hangaroo Lobby</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-image: url('background.jpg'); /* Replace with your image URL */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        #lobby-container {
+            max-width: 400px;
+            width: 100%;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+
+        #start-game-button {
+            padding: 10px;
+            cursor: pointer;
+            background-color: #3498db;
+            color: #fff;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+        }
+
+        #start-game-button:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+
+<div id="lobby-container">
+    <h1>Welcome to Hangaroo!</h1>
+    <p>Get ready to play and have fun!</p>
+    <p>Credits: Rivera, Benito, Pinca, Cruz, Briones
+    <button id="start-game-button" onclick="startGame()">Start Game</button>
+</div>
+
+<script>
+    function startGame() {
+        window.location.href = "hangggg.html";
+    }
+</script>
+
+</body>
+</html>
