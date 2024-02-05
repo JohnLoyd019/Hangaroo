@@ -75,21 +75,27 @@
         }
 
         #lives {
-            text-align: center;
-            margin-bottom: 20px;
-        }
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    text-align: center;
+    font-size: 18px;
+    color: #2ecc71;
+    z-index: 100; /* Ensures it stays on top of other elements */
+}
 
-        .heart {
-            color: red;
-            font-size: 24px;
-            padding: 0 5px;
-            user-select: none; /* Prevents text selection */
-        }
+.heart {
+    color: red;
+    font-size: 24px;
+    padding: 0 5px;
+    user-select: none; /* Prevents text selection */
+    display: inline-block; /* Ensures hearts are in a line */
+}
 
-        /* Style for a lost life (greyed out) */
-        .heart.lost {
-            color: #ccc;
-        }
+/* Style for a lost life (greyed out) */
+.heart.lost {
+    color: #ccc;
+}
 
         .letter,
         .number,
@@ -111,6 +117,28 @@
         #space-button:hover {
             background-color: #eee;
         }
+
+        .music-control {
+            position: absolute;
+            top: 10px; /* Adjust the value to move it further from the top */
+            left: 10px; /* Adjust the value to move it further from the left */
+            z-index: 100; /* Ensures it stays on top of other elements */
+        }
+        button {
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease; /* Smooth background color transition */
+        }
+        /* Style for when music is playing */
+        .playing {
+            background-color: #4CAF50; /* Green background to indicate music is playing */
+        }
+        /* Style for when music is paused */
+        .paused {
+            background-color: #f44336; /* Red background to indicate music is paused */
+        }
+
     </style>
 </head>
 <body>
@@ -126,7 +154,16 @@
             <span class="heart" id="heart3">&#10084;</span>
         </div>
         <button id="clue-button" onclick="promptForClueType()">Give Clue</button>
+       <div class="music-control">
+        <button id="toggleMusic" onclick="toggleMusic()" class="paused">🎵</button>
+        <audio id="backgroundMusic" loop>
+        <source src="sound.mp3" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
+    <script src="app.js"></script>
     </div>
+    
+
 
 <script>
     const questions = [
@@ -139,14 +176,14 @@
         { question: "Who wrote 'Romeo and Juliet'?", answer: "WILLIAM SHAKESPEARE", difficulty: "EASY" },
         { question: "What is the currency of the United Kingdom?", answer: "POUND", difficulty: "EASY" },
         { question: "Which ocean is the largest?", answer: "PACIFIC", difficulty: "EASY" },
-        { question: "In what year did Christopher Columbus reach the Americas?", answer: "1492", difficulty: "EASY" },
-        { question: "What is the square root of 64?", answer: "8", difficulty: "EASY" },
+        { question: "What is the science of numbers and their operations?", answer: "MATHEMATICS", difficulty: "EASY" },
+        { question: "What is anything which has mass and have space?", answer: "MATTER", difficulty: "EASY" },
 
         // MODERATE QUESTIONS (Programming/Computer/IT)
         { question: "In programming, what does the acronym 'HTML' stand for?", answer: "HYPERTEXT MARKUP LANGUAGE", difficulty: "MODERATE" },
         { question: "What does the acronym 'CSS' stand for in web development?", answer: "CASCADING STYLE SHEETS", difficulty: "MODERATE" },
         { question: "What is the main purpose of a firewall in network security?", answer: "PROTECT AGAINST UNAUTHORIZED ACCESS", difficulty: "MODERATE" },
-        { question: "What is the default port for HTTP?", answer: "80", difficulty: "MODERATE" },
+        { question: "What is the term used to describe the process of finding and fixing errors in a computer program?", answer: "DEBUGGING", difficulty: "MODERATE" },
         { question: "What programming language is often used for artificial intelligence?", answer: "PYTHON", difficulty: "MODERATE" },
         { question: "What is the purpose of a 'while' loop in programming?", answer: "REPEAT CODE WHILE A CONDITION IS TRUE", difficulty: "MODERATE" },
         { question: "What is the difference between 'var', 'let', and 'const' in JavaScript?", answer: "VARIABLE DECLARATION KEYWORDS", difficulty: "MODERATE" },
@@ -172,70 +209,118 @@
     let incorrectGuesses = 0;
     let selectedWord = "";
     let guessedWord = [];
-	let heartsLeft = 3;
+    let heartsLeft = 3;
+    let clueTries = 0;
     
     function initializeGame() {
-        currentQuestionIndex = 0;
-        totalPoints = 0;
-        incorrectGuesses = 0;
-        selectedWord = questions[currentQuestionIndex].answer.toUpperCase();
-        guessedWord = Array(selectedWord.length).fill('_');
-        updateDisplay();
-        renderKeyboard();
-        renderAnswerDisplay();
-        document.getElementById('clue-button').style.display = 'block';
-        showDifficultyWarning();
-        updateScoreDisplay();
-		heartsLeft = 3;
-        updateHeartsDisplay();
-    }
+    	currentQuestionIndex = 0;
+    	totalPoints = 0;
+    	incorrectGuesses = 0;
+    	selectedWord = questions[currentQuestionIndex].answer.toUpperCase();
+    	guessedWord = selectedWord.split('').map(char => (char !== ' ' ? '_' : ' '));
+    	updateDisplay();
+    	renderKeyboard();
+    	renderAnswerDisplay();
+    	document.getElementById('clue-button').style.display = 'block';
+    	showDifficultyWarning();
+    	updateScoreDisplay();
+    	heartsLeft = 3;
+    	updateHeartsDisplay();
+    
+    	shuffleQuestionsByDifficulty(); // Shuffle the questions by difficulty before starting the game
+}
 
+    function toggleMusic() {
+    var audio = document.getElementById("backgroundMusic");
+    var button = document.getElementById("toggleMusic");
+
+    if (audio.paused) {
+        audio.play();
+        button.innerHTML = "Mute Music";
+        button.classList.remove("paused");
+        button.classList.add("playing");
+    } else {
+        audio.pause();
+        button.innerHTML = "Play Music";
+        button.classList.remove("playing");
+        button.classList.add("paused");
+    }
+}
+
+// Optional: Attempt to play music automatically when the page loads
+document.addEventListener("DOMContentLoaded", function() {
+    var audio = document.getElementById("backgroundMusic");
+    audio.play().catch(error => {
+        console.error("Playback failed. User interaction might be required.", error);
+        // Update button to reflect that music is not playing
+        var button = document.getElementById("toggleMusic");
+        button.innerHTML = "Play Music";
+        button.classList.add("paused");
+    });
+});
+
+
+    function shuffleQuestionsByDifficulty() {
+    	const easyQuestions = questions.filter(question => question.difficulty === "EASY");
+    	const moderateQuestions = questions.filter(question => question.difficulty === "MODERATE");
+    	const difficultQuestions = questions.filter(question => question.difficulty === "DIFFICULT");
+    
+    	shuffleArray(easyQuestions);
+    	shuffleArray(moderateQuestions);
+    	shuffleArray(difficultQuestions);
+    
+    questions.length = 0; // Clear the original questions array
+    
+    // Concatenate the shuffled questions back into the main array
+    questions.push(...easyQuestions, ...moderateQuestions, ...difficultQuestions);
+}
+
+     function shuffleArray(array) {
+   	 for (let i = array.length - 1; i > 0; i--) {
+       		 const j = Math.floor(Math.random() * (i + 1));
+       		 [array[i], array[j]] = [array[j], array[i]];
+    }
+}
     function updateDisplay() {
         const currentQuestion = questions[currentQuestionIndex].question;
         document.getElementById('word-display').innerText = currentQuestion;
     }
 
     function renderAnswerDisplay() {
-        const answerDisplay = document.getElementById('answer-display');
-        answerDisplay.innerHTML = "";
+    const answerDisplay = document.getElementById('answer-display');
+    answerDisplay.innerHTML = "";
 
-        for (let i = 0; i < selectedWord.length; i++) {
-            const letterSpan = document.createElement('span');
+   for (let i = 0; i < selectedWord.length; i++) {
+        const letterSpan = document.createElement('span');
+
+        if (selectedWord[i] === " ") {
+            letterSpan.innerText = '\xa0'; // Use a non-breaking space
+        } else {
             letterSpan.innerText = guessedWord[i] || '_';
-            answerDisplay.appendChild(letterSpan);
-            if (i < selectedWord.length - 1) {
-                const spaceSpan = document.createElement('span');
-                spaceSpan.innerText = ' ';
-                answerDisplay.appendChild(spaceSpan);
-            }
+        }
+
+        answerDisplay.appendChild(letterSpan);
+
+        if (selectedWord[i + 1] !== " " && i < selectedWord.length - 1) {
+            const spaceSpan = document.createElement('span');
+            spaceSpan.innerText = ' ';
+            answerDisplay.appendChild(spaceSpan);
         }
     }
+}
 
     function renderKeyboard() {
-        const keyboardContainer = document.getElementById('keyboard');
-        keyboardContainer.innerHTML = "";
+    const keyboardContainer = document.getElementById('keyboard');
+    keyboardContainer.innerHTML = "";
 
-        // Letter buttons (A-Z)
-        for (let i = 65; i <= 90; i++) {
-            const letter = String.fromCharCode(i);
-            const letterButton = createButton(letter);
-            letterButton.addEventListener('click', () => guessLetter(letter));
-            keyboardContainer.appendChild(letterButton);
-        }
-
-        // Number buttons (1-10)
-        for (let i = 0; i <= 9; i++) {
-            const numberButton = createButton(i.toString());
-            numberButton.addEventListener('click', () => guessNumber(i));
-            keyboardContainer.appendChild(numberButton);
-        }
-
-        // Space button
-        const spaceButton = createButton('SPACE');
-        spaceButton.id = 'space-button';
-        spaceButton.addEventListener('click', () => guessLetter(' '));
-        keyboardContainer.appendChild(spaceButton);
+    // Letter buttons (A-Z)
+    for (let i = 65; i <= 90; i++) {
+        const letter = String.fromCharCode(i);
+        const letterButton = createButton(letter);
+        letterButton.addEventListener('click', () => guessLetter(letter));
+        keyboardContainer.appendChild(letterButton);
     }
+}
 
     function createButton(label) {
         const button = document.createElement('div');
@@ -245,29 +330,35 @@
     }
 
     function guessLetter(letter) {
-        handleGuess(letter);
+    // Check if the guessed letter is correct or incorrect
+    	handleGuess(letter);
+    
+    // Check if the guess is incorrect and reveal the answer if it is
+    if (!isLetterInWord(letter)) {
+        renderAnswerDisplay();
     }
-
-    function guessNumber(number) {
-        handleGuess(number.toString());
-    }
+}
+    function isLetterInWord(letter) {
+    // Check if the guessed letter is in the selected word
+    return selectedWord.includes(letter);
+}
     
     function handleGuess(guess) {
         const currentAnswer = selectedWord;
         if (currentAnswer.includes(guess)) {
-            for (let i = 0; i < currentAnswer.length; i++) {
-                if (currentAnswer[i] === guess) {
+            for (let i = 0; i < selectedWord.length; i++) {
+                if (selectedWord[i] === guess) {
                     guessedWord[i] = guess;
                 }
             }
             // Check if the entire word has been guessed
-            if (guessedWord.join('') === currentAnswer) {
+            if (guessedWord.join("") === selectedWord) {
                 totalPoints += 10;
                 // Move to the next question or end the game if needed
                 if (currentQuestionIndex < questions.length - 1) {
                     currentQuestionIndex++;
                     selectedWord = questions[currentQuestionIndex].answer.toUpperCase();
-                    guessedWord = Array(selectedWord.length).fill('_');
+                    guessedWord = selectedWord.split('').map(char => (char !== ' ' ? '_' : ' '));
                     updateDisplay();
                     renderAnswerDisplay();
                     document.getElementById('clue-button').style.display = 'block';
@@ -321,26 +412,32 @@
     function endGame() {
         alert(`Game Over!\nTotal Points: ${totalPoints}`);
         initializeGame();
+	clueTries = 0;
     }
 
     // Event listener for the "Give Clue" button
     function promptForClueType() {
-        if (totalPoints < 25) {
-            alert('Not enough points for a clue.');
-            return;
-        }
-
-        let choice = prompt("Enter 'C' for a consonant or 'V' for a vowel:");
-        if (choice) {
-            choice = choice.toUpperCase();
-            if (choice === 'C' || choice === 'V') {
-                giveClue(choice);
-            } else {
-                alert("Invalid input. Please enter 'C' or 'V'.");
-            }
-        }
+  	if (totalPoints < 25) {
+    	   alert('Not enough points for a clue.');
+    	   return;
     }
 
+  	if (clueTries >= 3) {
+    	   alert('You have reached the maximum number of clue tries.');
+   	   return;
+    }
+
+  	let choice = prompt("Enter 'C' for a consonant or 'V' for a vowel:");
+  	if (choice) {
+    	   choice = choice.toUpperCase();
+    	   if (choice === 'C' || choice === 'V') {
+     		giveClue(choice);
+      		clueTries++;
+    	    } else {
+      	      alert("Invalid input. Please enter 'C' or 'V'.");
+   	 }
+     }
+}
 
    function giveClue(choice) {
         const currentAnswer = selectedWord;
