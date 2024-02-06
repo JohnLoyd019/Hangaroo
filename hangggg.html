@@ -511,6 +511,10 @@ document.addEventListener("DOMContentLoaded", function() {
     function updateScoreDisplay() {
         document.getElementById('score-display').textContent = `Points: ${totalPoints}\t\t\t\tStrikes: ${incorrectGuesses}/3`;
     }
+
+	function startGame() {
+        window.location.href = "hangggg.html";
+    }
 	
     // Initialize the game on page load
     window.onload = initializeGame;
