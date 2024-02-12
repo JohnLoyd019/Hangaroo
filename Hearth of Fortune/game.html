@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="game.css">
+    <script src="game.js" defer></script>
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+    <title>Hearth of Fortune</title>
+
+</head>
+
+<body>
+    <section class="stage_section">
+        <div id="stage">
+            <div id="difficulty-warning" class="difficulty-warning"></div>
+        </div>
+    </section>
+        
+    <div class="back_btn">
+        <button id="back-btn" onclick="startGame()">&lt;</button>        
+    </div>
+
+    <div class="lives_clm">
+        <b>Lives:</b>
+        <div class="hearts">
+            <span class="heart" id="heart1">&#10084;</span>
+            <span class="heart" id="heart2">&#10084;</span>
+            <span class="heart" id="heart3">&#10084;</span>
+        </div>
+    </div>
+    
+    <div id="points"></div> <br>
+
+    <section class="guess_section">
+        <div class="q_n_a">
+            <div id="guess-container">
+                <div id="question"></div>
+                <div id="answer_field"></div>
+            </div>
+        </div> 
+    </section>
+    
+    <section class="keeb_section">
+        <div id="keeb_container">
+            <div class="keeb_row">
+                <button class="keeb_letters" id="keyboard"></button>
+            </div>
+            <div id="strikes"></div> <br>
+        </div>
+    </section>
+
+	<div class="end_section">
+        <button id="clue-button" onclick="promptForClueType()">Give Clue</button>
+    </div>
+        
+    <div class="music_section">
+        <button id="toggleMusic" onclick="toggleMusic()" class="paused">🎵</button>
+            <audio id="backgroundMusic" loop>
+                <source src="sound.mp3" type="audio/mp3">
+            </audio>
+        <script src="app.js"></script>
+    </div>
+    
+    <script>
+        function startGame() {
+            window.location.href = "index.html";
+        }
+    </script>
+
+</body>
+</html>

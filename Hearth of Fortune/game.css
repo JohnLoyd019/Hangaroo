@@ -1,0 +1,249 @@
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Bebas Neue', sans-serif;
+    background-image: url('dungeon.gif');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+}
+
+.back_btn button {
+    position: absolute;
+    top: 1px; /* Adjust the value to move it further from the top */
+    left: 20px; /* Adjust the value to move it further from the left */
+    z-index: 100; /* Ensures it stays on top of other elements */
+    padding: 10px 15px;
+    font-size: 18px;
+    background: #E87D95;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+}
+
+.back_btn button:hover {
+    background: #AF6686;
+    color: #fff;
+}
+
+.stage_section {
+    margin-top: 3rem;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 3rem;
+}
+
+#stage {
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    padding: 20px 40px;
+    background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white */
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+#difficulty-warning {
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    font-size: 36px;
+    color: #222;
+    cursor: default;
+}
+
+.lives_clm {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 1px;
+    right: 30px;
+    text-align: center;
+    cursor: default;
+    font-size: 20px;
+    color: #28b463;
+    z-index: 100; /* Ensures it stays on top of other elements */
+}
+
+.hearts {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.heart {
+    color: red;
+    font-size: 28px;
+    padding: 0 5px;
+    user-select: none; /* Prevents text selection */
+    display: inline-block; /* Ensures hearts are in a line */
+}
+
+.heart.lost {
+    color: #ccc;
+}
+
+#points {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    margin-bottom: 2rem;
+    font-size: 30px;
+    color: #000;
+    cursor: default;
+}
+
+.guess_section {
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 5rem;
+}
+
+.q_n_a {
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+}
+
+#guess-container {
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    padding: 30px;
+    background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white */
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+#question {
+    margin-top: 20px;
+    font-size: 36px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #333;
+}
+
+#answer_field {
+    font-size: 50px;
+    color: #555;
+}
+
+.keeb_section {
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    margin-bottom: 3rem;
+}
+
+#keeb_container {
+    flex-wrap: wrap;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    width: 50rem;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white */
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);    
+}
+
+#keyboard.keeb_letters {
+    margin: 10px;
+    background: transparent;
+    border: none;
+}
+
+.letter {
+    font-family: 'Bebas Neue';
+    display: inline-block;
+    font-size: 2rem;
+    width: 3rem;
+    margin: 4px;
+    padding: 8px;
+    border-radius: 5px;
+    background-color: #fff;
+    color: #333;
+    cursor: pointer;
+    transition: all ease .3s;
+}
+
+.letter:hover {
+    background-color: #eee;
+}
+
+.letter.clicked {
+    background-color: gray; /* Change button color to gray when clicked */
+}
+
+#strikes {
+    font-size: 22px;
+    color: #000;
+    cursor: default;
+}
+
+.end_section {
+    display: flex;
+    justify-content: center;
+    position: relative;
+}
+
+#clue-button {
+    font-family: 'Bebas Neue';
+    display: flex;
+    padding: 10px 20px;
+    cursor: pointer;
+    background: #E87D95;
+    color: #000;
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+}
+
+#clue-button:hover {
+    background: #AF6686;
+    color: #fff;
+    /* background-color: #2980b9; */
+}
+
+.music_section {
+    display: flex;
+    justify-content: right;
+    position: relative;
+}
+
+.music_section button {
+    border: none;
+    border-radius: 5px;
+    margin-right: 40px;
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.music_section button:hover {
+    background: #4CAF50;
+}
+
+/* Style for when music is playing */
+.playing {
+    background-color: #4CAF50; /* Green background to indicate music is playing */
+} 
+
+/* Style for when music is paused */
+.paused {
+    background-color: #f44336; /* Red background to indicate music is paused */
+}

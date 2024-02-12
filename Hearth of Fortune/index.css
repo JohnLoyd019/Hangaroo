@@ -1,0 +1,151 @@
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Bebas Neue', sans-serif;
+    background-image: url('background.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    overflow-x: hidden;
+}
+
+#lobby-container {
+    display: flex;
+    max-width: 600px;
+    width: 100%;
+    text-align: center;
+    flex-direction: column;
+    cursor: default;
+}
+
+#lobby-container h1 {
+    font-size: 75px;
+    font-weight: bolder;
+    padding-bottom: 10px;
+    transition: 0.5s;
+    cursor: default;
+}
+
+#lobby-container h1:hover {
+    transform: scale(1.2);
+}
+
+#show-h2p-btn {
+    font-family: 'Bebas Neue';
+    font-size: 28px;
+    padding: 15px 15px;
+    margin: 10px 150px;
+    background-color: #1E7821;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#show-h2p-btn:hover {
+    background-color: #1B481D;
+}
+
+#start-game-btn {
+    font-family: 'Bebas Neue';
+    font-size: 28px;
+    padding: 15px 15px;
+    margin: 10px 150px;
+    background-color: #1E7821;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#start-game-btn:hover {
+    background-color: #1B481D;
+}
+
+.popup .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 1;
+    display: none;
+    cursor: default;
+}
+
+.popup .content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    background: #ccc;
+    text-align: center;
+    width: 350px;
+    height: 400px;
+    padding: 20px;
+    box-sizing: border-box;
+    border-radius: 8px;
+    cursor: default;
+    z-index: 2;
+    transition: 0.3s;
+    transform: translate(-50%,-50%) scale(0);
+}
+
+.content h1 {
+    margin-top: 5rem;
+}
+
+.content p {
+    margin-top: 3rem;
+    justify-content: center;
+    padding: 0px 5px;
+    font-size: 18px;
+}
+
+.popup .close-btn {
+    cursor: pointer;
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    width: 30px;
+    height: 30px;
+    font-size: 50px;
+    line-height: 30px;
+    text-align: center;
+}
+
+.popup.active .overlay {
+    display: block;
+}
+
+.popup.active .content {
+    transition: all 300ms ease-in-out;
+    transform: translate(-50%,-50%) scale(1);
+}
+
+footer{
+    display: flex;
+    justify-content: center;
+    padding: 12px;
+    background-color: #1B481D;
+    color: #fff;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    text-align: center;
+    font-size: 16px;
+    font-family: 'Bebas Neue';
+    gap: 20px;
+  }
