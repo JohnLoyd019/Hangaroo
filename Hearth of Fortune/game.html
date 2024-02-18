@@ -56,9 +56,54 @@
         </div>
     </section>
 
+
 	<div class="end_section">
         <button id="clue-button" onclick="promptForClueType()">Give Clue</button>
     </div>
+
+    <div id="nopoints" class="modal">
+        <div class="overlay"></div>
+        <div class="content">
+            <p>Sorry, you have insufficient points! You need at least 25 points to use a hint.</p>
+            <button onclick="promptForClueType()">Ok</button>
+        </div>  
+    </div>
+
+    <div id="hintclue" class="modal">
+        <div class="overlay"></div>
+        <div class="content">
+            <h1>Choose Hint:</h1>
+            <div class="close-btn" onclick="hintclue()">&times;</div>
+            <button id="vowel-btn" onclick="selectVowel()">Vowel</button>
+            <button id="cosnt-btn" onclick="selectConsonant()">Consonant</button>
+        </div>   
+    </div>
+
+    <div id="vowel_cosnt" class="modal">
+        <div class="overlay"></div>
+        <div id="alert-content" class="content">
+            <p id="alert-message"></p>
+            <button onclick="showCustomAlert()">OK</button>
+        </div>   
+    </div>
+
+    <div id="guessedword" class="modal">
+        <div class="overlay"></div>
+        <div class="content">
+            <h1>Correct Guess!</h1>
+            <button onclick="">Next round</button>
+        </div>            
+    </div>
+
+    <div id="gameover" class="modal">
+        <div class="overlay"></div>
+        <div class="content">
+            <p id="go_tlt">Game Over! You have used all your lives.</p>
+            <button id="so" onclick="restartGame()">Start Over</button>
+            <button id="btm" onclick="startGame()">Back to Menu</button>
+        </div>
+    </div>
+
         
     <div class="music_section">
         <button id="toggleMusic" onclick="toggleMusic()" class="paused">🎵</button>
@@ -71,6 +116,10 @@
     <script>
         function startGame() {
             window.location.href = "index.html";
+        }
+        function restartGame() {
+            window.location.reload();
+            initializeGame();
         }
     </script>
 
