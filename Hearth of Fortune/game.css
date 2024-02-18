@@ -18,9 +18,9 @@ body {
 
 .back_btn button {
     position: absolute;
-    top: 1px; /* Adjust the value to move it further from the top */
-    left: 20px; /* Adjust the value to move it further from the left */
-    z-index: 100; /* Ensures it stays on top of other elements */
+    top: 1px;
+    left: 20px;
+    z-index: 100;
     padding: 10px 15px;
     font-size: 18px;
     background: #E87D95;
@@ -185,7 +185,7 @@ body {
 }
 
 .letter.clicked {
-    background-color: gray; /* Change button color to gray when clicked */
+    background-color: gray;
 }
 
 #strikes {
@@ -218,6 +218,85 @@ body {
     /* background-color: #2980b9; */
 }
 
+.modal .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 1;
+    display: none;
+    cursor: default;
+}
+
+.modal .content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    background: #ccc;
+    text-align: center;
+    width: 250px;
+    height: 200px;
+    padding: 20px;
+    box-sizing: border-box;
+    border-radius: 8px;
+    cursor: default;
+    z-index: 2;
+    transition: 0.3s;
+    transform: translate(-50%,-50%) scale(0);
+}
+
+.content h1 {
+    margin-top: 1rem;
+}
+
+.content p {
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+    justify-content: center;
+    padding: 0px 5px;
+    font-size: 18px;
+}
+
+.content button {
+    font-family: 'Bebas Neue';
+    font-size: 18px;
+    padding: 10px 10px;
+    margin: 3px 50px;
+    background-color: #E87D95;
+    color: #000;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.content button:hover {
+    background: #AF6686;
+    color: #fff;
+}
+
+.modal .close-btn {
+    cursor: pointer;
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    width: 30px;
+    height: 30px;
+    font-size: 50px;
+    line-height: 30px;
+    text-align: center;
+}
+
+.modal.active .overlay {
+    display: block;
+}
+
+.modal.active .content {
+    transition: all 300ms ease-in-out;
+    transform: translate(-50%,-50%) scale(1);
+}
+
 .music_section {
     display: flex;
     justify-content: right;
@@ -238,12 +317,10 @@ body {
     background: #4CAF50;
 }
 
-/* Style for when music is playing */
 .playing {
-    background-color: #4CAF50; /* Green background to indicate music is playing */
+    background-color: #4CAF50;
 } 
 
-/* Style for when music is paused */
 .paused {
-    background-color: #f44336; /* Red background to indicate music is paused */
+    background-color: #f44336;
 }
