@@ -45,6 +45,8 @@ let heartsLeft = 3;
 let clueTries = 0;
 
 function initializeGame() {
+    shuffleQuestionsByDifficulty();
+
     currentQuestionIndex = 0;
     totalPoints = 0;
     incorrectGuesses = 0;
@@ -58,8 +60,6 @@ function initializeGame() {
     updateScoreDisplay();
     heartsLeft = 3;
     updateHeartsDisplay();
-
-    shuffleQuestionsByDifficulty(); // Shuffle the questions by difficulty before starting the game
 }
 
 function shuffleQuestionsByDifficulty() {
@@ -235,34 +235,57 @@ function updateHeartsDisplay() {
 }
 
 function endGame() {
-    alert(`Game Over!\nTotal Points: ${totalPoints}`);
-    initializeGame();
-    clueTries = 0;
+    gameoverpopup();
 }
 
 // Event listener for the "Give Clue" button
 function promptForClueType() {
-  if (totalPoints < 25) {
-       alert('Not enough points for a clue.');
-       return;
+    if (totalPoints < 25) {
+        document.getElementById("nopoints").classList.toggle("active");
+        return;
     }
 
-  if (clueTries >= 3) {
-       alert('You have reached the maximum number of clue tries.');
-      return;
+    if (clueTries >= 3) {
+        alert('You have reached the maximum number of clue tries.');
+        return;
     }
 
-  let choice = prompt("Enter 'C' for a consonant or 'V' for a vowel:");
-    if (choice) {
-        choice = choice.toUpperCase();
-        if (choice === 'C' || choice === 'V') {
-            giveClue(choice);
-            clueTries++;
-            } else {
-                alert("Invalid input. Please enter 'C' or 'V'.");
-        }
-    }
+    hintclue();
 }
+
+function hintclue() {
+    document.getElementById("hintclue").classList.toggle("active");
+}
+
+function selectVowel() {
+    giveClue('V');
+    document.getElementById('hintclue').style.display = 'none';
+}
+
+function selectConsonant() {
+    giveClue('C');
+    document.getElementById('hintclue').style.display = 'none';
+}
+
+function gameoverpopup() {
+    document.getElementById("gameover").classList.toggle("active");
+}
+
+function showCustomAlert(message) {
+    document.getElementById("vowel_cosnt").classList.toggle("active");
+    const alertMessage = document.getElementById("alert-message");
+    document.getElementById('alert-message').style.marginTop = '2rem';
+    document.getElementById('alert-message').style.marginBottom = '1.5rem';
+    document.getElementById('hintclue').style.display = 'none';
+    
+    alertMessage.textContent = message;
+    alertContent.classList.add("active");
+}
+
+// function hideCustomAlert() {
+//     const alertContent = document.getElementById("alert-content");
+//     alertContent.classList.remove("active");
+// }
 
 function giveClue(choice) {
     const currentAnswer = selectedWord;
@@ -285,7 +308,7 @@ function giveClue(choice) {
                 randomLetter = consonants[randomIndex].letter;
                 guessedWord[consonants[randomIndex].index] = randomLetter;
             } else {
-                alert("No missing consonants found.");
+                showCustomAlert("No missing consonants found.");
                 return;
             }
         } else if (choice === 'V') {
@@ -295,21 +318,18 @@ function giveClue(choice) {
                 randomLetter = vowels[randomIndex].letter;
                 guessedWord[vowels[randomIndex].index] = randomLetter;
             } else {
-                alert("No missing vowels found.");
+                showCustomAlert("No missing vowels found.");
                 return;
             }
-        } else {
-            alert("Invalid choice. Please choose 'C' for consonants or 'V' for vowels.");
-            return;
         }
 
         totalPoints -= 25;
         updateScoreDisplay();
         renderAnswerDisplay();
 
-        alert(`Clue: One of the missing letters is '${randomLetter}'.`);
+        showCustomAlert(`Clue: One of the missing letters is '${randomLetter}'.`);
     } else {
-        alert('No clue available for this word.');
+        showCustomAlert('No clue available for this word.');
     }
 }
 
